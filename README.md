@@ -8,22 +8,25 @@ This is fairly easy to use...
 SRDG uses a basic object notation to define data structures:
 
   There are four data types:
-  - number
+  - bool
   - string
+  - number
   - array
   - object
 
 Each is used like so:
 ```js
-randomData({string:14})
+new randomData({bool:"random"})
+//Output: false or true
+new randomData({string:14})
 //Output: "ZWgt8EBTNbN5s2"
-randomData({number:14})
+new randomData({number:14})
 //Output: 13835931144238
-randomData({
+new randomData({
   array: {string:14, Amount:5} 
   })
 //Output: ["RyozF", "72ZPO", "jNhOb", "pOAry", "v30zQ"]
-randomData({
+new randomData({
   object: {
     prop1: {string:14}, 
     prop2:{number:14} 
@@ -40,6 +43,40 @@ The object data type takes an object with whatever and however many properties t
 The array data type takes an object with two properties: value, and amount (e.g. `{array: {number:5, Amount:10} }` ).
 The value can be set to any of the four data types and the amount accepts an int as an indicator of how many of the proviously defined data type to generate... Thus `{array: {number:5, Amount:10} }` generates an array of 10 numbers 5 places long.
 
+The string data type actually has more than one function (as of the latest update).
+It can return a random string, multiply a specified string, randomly choose a string from an array of strings, and multiply a randomly chosen string.
+Examples:
+```js
+new randomData({
+  string: 5
+});
+//Output: FjQ2u
+new randomData({
+  string: {
+    "This is my string that I want to multiply. ": 2
+  }
+});
+//Output: "This is my string that I want to multiply. This is my string that I want to multiply. "
+new randomData({
+  string: [
+    "string one",
+    "string two",
+    "string three"
+  ]
+});
+//Output: "string two"
+new randomData({
+  string: {
+    strings: [
+    "string one ",
+    "string two ",
+    "string three "
+  ],
+  times: 3
+  }
+});
+//Output: "string one string one string one"
+```
 
 SRDG supports nesting, so you can created virtually any structure you can imagine...
 The following code creates an array of 100 objects with 3 properties (one of which is an object that holds an array of strings as a property called list)
@@ -60,5 +97,28 @@ var data = new randomData({
   }
 });
 ```
+
+Once you create your data set you can curate that data (if wanted) using the curateData function:
+```js
+var data = new randomData({
+  array: {
+    object:{
+      name: { string: [
+        "John",
+        "Jim",
+        "James"
+      ] 
+      },
+      phoneNumber: { number:7 },
+    },
+    Amount: 100
+  }
+});
+var filteredData = curateData(data,["object.name=='John'"]);
+```
+The filteredData variable will be an array of all the objects who's property "name" is equal to 'john'.
+
+
+
 
 As you will quickly find, SRDG can generate thousands of data types in a single second which makes it great for stress testing a system by feeding it large loads of data.
