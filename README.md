@@ -118,7 +118,38 @@ var filteredData = curateData(data,["object.name=='John'"]);
 ```
 The filteredData variable will be an array of all the objects who's property "name" is equal to 'john'.
 
-
-
+There is also a pushData function that pushes data (specifically an array of objects, as a base structure) into a DOM element using a specified markup.
+The syntax is: pushData(ELEMENT, DATA, MARKUP)
+Example:
+```js
+pushData(
+  document.getElementById("notes"),
+  new randomData({
+    array: {
+      object: {
+        title: {
+          string: [
+            "New idea",
+            "Another idea",
+            "A great idea"
+          ]
+        },
+        body: {
+          string: {
+            "This is example text. ": 10
+          }
+        }
+      },
+      Amount: 25
+    }
+  }),
+  `
+  <div>
+    <h2>[-title-]</h2>
+    <p>[-body-]</p>
+  </div>
+  `
+);
+```
 
 As you will quickly find, SRDG can generate thousands of data types in a single second which makes it great for stress testing a system by feeding it large loads of data.
